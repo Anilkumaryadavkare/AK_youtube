@@ -1,8 +1,8 @@
 flask
 yt-dlp
-youtube-transcript-api
 python-dotenv
 ollama
 waitress
 pyngrok
-youtube-transcript-api==latest_version
+youtube-transcript-api==0.4.1
+pip>=25.0
