@@ -1,0 +1,7 @@
+{
+  "num_parallel": 1,
+  "num_gqa": 1,
+  "num_gpu": 0,
+  "low_vram": true,
+  "num_threads": 4
+}

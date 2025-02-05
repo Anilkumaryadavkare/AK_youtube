@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Q&A with DeepSeek</title>
+    <style>
+        body { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { display: flex; gap: 20px; }
+        .form-section { flex: 1; }
+        .answer-section { margin-top: 20px; }
+        .timestamp { cursor: pointer; color: blue; }
+    </style>
+</head>
+<body>
+    <h1>YouTube Q&A System</h1>
+    
+    <div class="container">
+        <div class="form-section">
+            <form method="POST">
+                <label>YouTube URL:</label>
+                <input type="text" name="url" required style="width: 100%">
+                
+                <label>Question:</label>
+                <textarea name="question" required rows="4" style="width: 100%"></textarea>
+                
+                <button type="submit">Ask DeepSeek</button>
+            </form>
+        </div>
+    </div>
+
+    {% if answer %}
+    <div class="answer-section">
+        <h3>Answer:</h3>
+        <p>{{ answer }}</p>
+        
+        {% if timestamps %}
+        <h4>Jump to timestamp:</h4>
+        {% for ts in timestamps %}
+        <span class="timestamp" onclick="seekVideo({{ ts }})">
+            {{ ts }}s
+        </span>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <iframe id="player" width="100%" height="415" 
+        src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1" 
+        frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+
+    {% if error %}
+    <div class="error" style="color: red;">
+        Error: {{ error }}
+    </div>
+    {% endif %}
+
+    <script>
+        const player = document.getElementById('player');
+        function seekVideo(seconds) {
+            player.contentWindow.postMessage(JSON.stringify({
+                event: 'command',
+                func: 'seekTo',
+                args: [seconds, true]
+            }), '*');
+        }
+    </script>
+</body>
+</html>
