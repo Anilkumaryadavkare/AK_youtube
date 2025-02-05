@@ -15,7 +15,8 @@ def index():
         video_id = get_video_id(url)
         
         try:
-            transcript = get_transcript(video_id)
+            # Attempt to fetch the transcript with fallback to download and parse subtitles if needed
+            transcript = get_transcript(video_id, download_subtitles=True)
             chunks = chunk_transcript(transcript)
             
             response = ollama.generate(

@@ -6,3 +6,5 @@ waitress
 pyngrok
 youtube-transcript-api>=0.4.1
 pip>=25.0
+webvtt-py
+requests
