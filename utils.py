@@ -51,10 +51,10 @@ def parse_vtt(vtt_data):
     return captions
 
 def get_youtube_cookies_path():
-    return os.getenv('YOUTUBE_COOKIES_PATH', 'default_path')  # Default path if env variable isn't set
-
+    return os.getenv("YOUTUBE_COOKIES_PATH", "default_path_to_cookies")  # Indented correctly
+  
 def search_youtube_videos(query, max_results=5):
-cookies_path = get_youtube_cookies_path()  # Get cookies path dynamically
+    cookies_path = get_youtube_cookies_path()  # Get cookies path dynamically
 
 ydl_opts = {
     'quiet': True,
