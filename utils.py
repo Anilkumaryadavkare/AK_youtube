@@ -34,6 +34,7 @@ def download_and_parse_subtitles(video_id):
         result = ydl.extract_info(f'https://www.youtube.com/watch?v={video_id}', download=False)
         if 'subtitles' in result and 'en' in result['subtitles']:
             subtitle_file = result['subtitles']['en'][0]['url']
+            # Read the subtitle file directly
             subtitle_data = ydl.urlopen(subtitle_file).read().decode('utf-8')
             return parse_vtt(subtitle_data)
         else:
@@ -49,13 +50,19 @@ def parse_vtt(vtt_data):
         })
     return captions
 
+def get_youtube_cookies_path():
+    return os.getenv('YOUTUBE_COOKIES_PATH', 'default_path')  # Default path if env variable isn't set
+
 def search_youtube_videos(query, max_results=5):
+    cookies_path = get_youtube_cookies_path()  # Get cookies path dynamically
+
     ydl_opts = {
         'quiet': True,
         'extract_flat': True,
-        'force_generic_extractor': True
+        'force_generic_extractor': True,
+        'cookies': cookies_path  # Use dynamic cookies path
     }
-    
+
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         result = ydl.extract_info(f"ytsearch{max_results}:{query}", download=False)
         return [{
