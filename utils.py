@@ -52,16 +52,16 @@ def parse_vtt(vtt_data):
 
 def get_youtube_cookies_path():
     return os.getenv("YOUTUBE_COOKIES_PATH", "default_path_to_cookies")  # Indented correctly
-  
+
 def search_youtube_videos(query, max_results=5):
     cookies_path = get_youtube_cookies_path()  # Get cookies path dynamically
 
-ydl_opts = {
-    'quiet': True,
-    'extract_flat': True,
-    'force_generic_extractor': True,
-    'cookies': cookies_path  # Use dynamic cookies path
-}
+    ydl_opts = {
+        'quiet': True,
+        'extract_flat': True,
+        'force_generic_extractor': True,
+        'cookies': cookies_path  # Use dynamic cookies path
+    }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         result = ydl.extract_info(f"ytsearch{max_results}:{query}", download=False)
